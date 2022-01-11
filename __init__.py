@@ -37,7 +37,7 @@ def connect_mqtt():
     client = mqtt_client.Client(client_id)
     client.username_pw_set(config_get("username"), config_get("password"))
     client.on_connect = on_connect
-    client.connect(config_get("broker"), config_get_int("port"))
+    client.connect(config_get("broker"), config_get_int("port", 1883))
     return client
 
 def on_message(client, userdata, msg):
