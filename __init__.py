@@ -21,7 +21,7 @@ def connect_mqtt():
         if rc == 0:
             print("Connected to MQTT Broker!")
         else:
-            print("Failed to connect, return code %d\n", rc)
+            print("Failed to connect, return code", rc)
             exit(1)
     client = mqtt_client.Client(client_id)
     client.username_pw_set(CONFIG["username"], CONFIG["password"])
@@ -31,7 +31,9 @@ def connect_mqtt():
 
 def on_message(client, userdata, msg):
     try:
-        data = json_loads(msg.payload.decode())
+        data_raw = msg.payload.decode()
+        print("Got MQTT", data_raw)
+        data = json_loads(data_raw)
         ctrlDev = DEVICE_TYPES[data["type"]]
         ctrlDev.initRadio(RFCAT_DEV)
         ctrlDev.send(RFCAT_DEV, data)
