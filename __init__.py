@@ -10,9 +10,13 @@ from random import randint
 
 def load_config():
     global _CONFIG
-    fh = open("config.yml", "r")
-    _CONFIG = yaml_load(fh)
-    fh.close()
+    try:
+        fh = open("config.yml", "r")
+        _CONFIG = yaml_load(fh)
+        fh.close()
+    except FileNotFoundError:
+        print("Config file not found, hope we got environment variables set...")
+        _CONFIG = {}
 
 def config_get(key, default=None):
     env = getenv(f"RFCAT_MQTT_{key.upper()}")
