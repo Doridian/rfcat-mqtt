@@ -17,7 +17,7 @@ _PACKET_LEN = 5 # bytes
 
 class MinkaAireFan(Commandable):
 	def __init__(self):
-		self.repeats = 5
+		self.repeats = 20
 		self.pause_frame = b"\0" * _PACKET_LEN
 
 	def initRadio(self, dev):
