@@ -27,7 +27,7 @@ class MinkaAireFan(Commandable):
 		dev.makePktFLEN(_PACKET_LEN)
 		dev.setMdmSyncMode(0)
 
-	def send(self, dev, packet):
+	def sendInt(self, dev, packet):
 		command = _COMMANDS[packet["command"]]
 		id = int(packet["id"], 2)
 		data = (id << 5) | command

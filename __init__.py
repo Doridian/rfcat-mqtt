@@ -50,7 +50,6 @@ def on_message(client, userdata, msg):
         print("Got MQTT", data_raw)
         data = json_loads(data_raw)
         ctrlDev = DEVICE_TYPES[data["type"]]
-        ctrlDev.initRadio(RFCAT_DEV)
         ctrlDev.send(RFCAT_DEV, data)
     except Exception as e:
         print(e)

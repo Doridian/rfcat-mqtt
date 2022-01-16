@@ -1,11 +1,26 @@
-class Commandable():
+from abc import ABC, abstractmethod
+
+dev_class_map = {}
+
+class Commandable(ABC):
+	@abstractmethod
 	def initRadio(self, dev):
-		raise Exception("Must implement initRadio(dev)")
+		pass
+
+	@abstractmethod
+	def sendInt(self, dev, packet):
+		pass
 
 	def sendRepeated(self, dev, data):
+		res = b''
 		for i in range(0, self.repeats):
-			dev.RFxmit(data)
-			dev.RFxmit(self.pause_frame)
+			res += data + self.pause_frame
+		dev.RFxmit(res)
 
 	def send(self, dev, packet):
-		raise Exception("Must implement send(dev, packet)")
+		global dev_class_map
+		if dev not in dev_class_map or dev_class_map[dev] != self:
+			self.initRadio(dev)
+			dev_class_map[dev] = self
+
+		self.sendInt(dev, packet)
