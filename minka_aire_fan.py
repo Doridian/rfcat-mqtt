@@ -17,7 +17,7 @@ _PACKET_LEN = 5 # bytes
 
 class MinkaAireFan(Commandable):
 	def __init__(self):
-		super.__init__(self)
+		super().__init__()
 		self.repeats = 20
 		self.pause_time = 0.01
 
