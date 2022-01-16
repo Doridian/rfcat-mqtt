@@ -35,6 +35,4 @@ class MinkaAireFan(Commandable):
 		rawData = 0
 		for i in range(0, _COMMAND_LEN):
 			rawData |= (0b100 | ((data >> i) & 1)) << (i * 3)
-		rawData <<= 1
-		rawDataB = rawData.to_bytes(5, "big")
-		self.sendRepeated(dev, rawDataB)
+		self.sendRepeated(dev, rawData.to_bytes(5, "big"))
