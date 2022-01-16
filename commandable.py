@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from time import sleep
 
 dev_class_map = {}
 
@@ -11,11 +12,13 @@ class Commandable(ABC):
 	def sendInt(self, dev, packet):
 		pass
 
+	def __init__(self):
+		self.pause_time = 0.01
+
 	def sendRepeated(self, dev, data):
-		res = b''
 		for i in range(0, self.repeats):
-			res += data + self.pause_frame
-		dev.RFxmit(res)
+			dev.RFxmit(data)
+			sleep(self.pause_time)
 
 	def send(self, dev, packet):
 		global dev_class_map
