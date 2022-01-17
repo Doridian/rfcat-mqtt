@@ -26,4 +26,4 @@ jobs:
           build-args: |
             GIT_REVISION=${{ github.sha }}
           tags: |
-            ghcr.io/doridian/rfcat-mqtt/rfcat-mqtt:latest
+            ghcr.io/foxdenhome/rfcat-mqtt/rfcat-mqtt:latest
