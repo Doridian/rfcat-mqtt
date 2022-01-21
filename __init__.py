@@ -7,6 +7,7 @@ from paho.mqtt import client as mqtt_client
 from yaml import safe_load as yaml_load
 from json import loads as json_loads
 from random import randint
+from utils import ping_every
 
 def load_config():
     global _CONFIG
@@ -60,6 +61,8 @@ def run():
     RFCAT_DEV.ping()
 
     load_config()
+
+    ping_every(10, RFCAT_DEV)
 
     client = connect_mqtt()
     client.subscribe(config_get("topic"))
