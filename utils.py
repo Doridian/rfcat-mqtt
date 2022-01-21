@@ -1,5 +1,7 @@
 from threading import Timer
 
+from watchdog import watchdog_ping
+
 def do_every(interval, worker_func, iterations = 0):
   if iterations != 1:
     Timer (
@@ -13,6 +15,7 @@ def ping_every(interval, dev):
     def ping_func():
         try:
             dev.ping()
+            watchdog_ping()
         except Exception as e:
             print(e)
             exit(1)

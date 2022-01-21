@@ -2,12 +2,14 @@
 
 from os import getenv
 from rflib import RfCat
+from watchdog import serve, set_watchdog_period
 from registry import DEVICE_TYPES
 from paho.mqtt import client as mqtt_client
 from yaml import safe_load as yaml_load
 from json import loads as json_loads
 from random import randint
 from utils import ping_every
+from threading import Thread
 
 def load_config():
     global _CONFIG
@@ -62,7 +64,12 @@ def run():
 
     load_config()
 
-    ping_every(10, RFCAT_DEV)
+    httpThread = Thread(target=serve, name="Ready HTTP server", daemon=True)
+    httpThread.start()
+
+    PING_INTERVAL = config_get_int("ping_interval", 10)
+    set_watchdog_period(PING_INTERVAL * 2)
+    ping_every(PING_INTERVAL, RFCAT_DEV)
 
     client = connect_mqtt()
     client.subscribe(config_get("topic"))
